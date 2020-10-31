@@ -21,4 +21,29 @@ object Parser {
   case object Failure extends ParseResult[Nothing]
 
   type Parser[+T] = String => ParseResult[T]
+
+  def trueParser: Parser[Boolean] = input =>
+    if (input.startsWith("true")) {
+      Success(true, input.substring("true".length))
+    } else {
+      Failure
+    }
+  /** scala> trueParser
+   *
+   * > import jp.ed.nnn.parsercombinator.Parser._
+   * import jp.ed.nnn.parsercombinator.Parser._
+   *
+   * > trueParser("true")
+   * res0: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Success(true,)
+   *
+   * > trueParser("hoge")
+   * res1: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Failure
+   */
+
+  def falseParser: Parser[Boolean] = input =>
+    if (input.startsWith("false")) {
+      Success(false, input.substring("false".length))
+    } else {
+      Failure
+    }
 }
