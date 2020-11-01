@@ -28,8 +28,7 @@ object Parser {
     } else {
       Failure
     }
-  /** scala> trueParser
-   *
+  /**
    * > import jp.ed.nnn.parsercombinator.Parser._
    * import jp.ed.nnn.parsercombinator.Parser._
    *
@@ -46,4 +45,30 @@ object Parser {
     } else {
       Failure
     }
+  /**
+   * > import jp.ed.nnn.parsercombinator.Parser._
+   * import jp.ed.nnn.parsercombinator.Parser._
+   *
+   * > falseParser("false")
+   * res0: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Success(false,)
+   *
+   * > falseParser{"hoge"}
+   * res1: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Failure
+   */
+
+  def booleanParser: Parser[Boolean] = input =>
+    trueParser(input) match {
+      case success@Success(_, _) => success
+      case Failure => falseParser(input)
+    }
+  /**
+   * > booleanParser("true")
+   * res2: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Success(true,)
+   *
+   * > booleanParser("false")
+   * res3: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Success(false,)
+   *
+   * > booleanParser("hoge")
+   * res4: jp.ed.nnn.parsercombinator.Parser.ParseResult[Boolean] = Failure
+   */
 }
